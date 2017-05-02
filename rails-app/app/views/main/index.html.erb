@@ -1,7 +1,10 @@
 <div class="jumbotron">
   <h1>Welcome!</h1>
   <% if current_user %>
-    <form>
+    <form method="post" action="action">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <input placeholder="Enter article url" type="text" name="url" id="url" /></br>
+      <input type="submit" name="read" value="Read"><input type="submit" name="add" value="Add">
     </form>
   <% else %>
     <p>Authenticate via one of the social networks to get started.</p>

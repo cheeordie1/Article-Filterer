@@ -1,8 +1,6 @@
 import newspaper
 import pickle as pkl
 
-"""Store corpora as lists of {'title': title, 'text': text, 'url': url} dicts"""
-
 SAMPLES_DIR = 'sample_datasets'
 
 # Define new corpora here
@@ -18,6 +16,7 @@ sample_corpora = {
         ]
 }
 
+"""Stores corpora as lists of {'title': title, 'text': text, 'url': url} dicts"""
 def build_corpus(name, urls):
 
     print('Building %s corpus with %d urls' % (name, len(urls)))
@@ -35,7 +34,5 @@ def build_corpus(name, urls):
 if __name__ == '__main__':
     for name, urls in sample_corpora.items():
         build_corpus(name, urls)
-
-
 
 

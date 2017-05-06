@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 /*
- * CSS pertaining to top header
+ * CSS pertaining to top header.
  */
 #headerContainer {
   margin: 0px;
@@ -14,14 +14,16 @@
 
 #headerRow {
   position: relative;
+  width: 100%;
   height: 65px;
 }
 
 #headerLogoContainer {
+  // TODO make a logo and fill in properties
 }
 
 /*
- * CSS to change the title at top of page
+ * CSS to change the title at top of page.
  */
 #headerTitleContainer {
   height: 100%;
@@ -49,5 +51,37 @@
 }
 
 #headerLoginButton {
+  position: relative;
+}
+
+/*
+ * CSS pertaining to the page displayed for a user who is not
+ * logged in.
+ */
+
+#loginInfoContainer {
+  position: relative;
+  margin-top: 50px;
+  border: 6px solid rgba(249, 208, 94, 0.4);
+  border-left: 0px;
+  border-right: 0px;
+  text-align: center;
+}
+
+#loginInfoDescriptionContainer {
+  // Empty
+}
+
+#loginInfoDescription {
+  position: relative;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  text-align: left;  
+  text-indent: 30px;
+  line-height: 30px;
+}
+
+#loginInfoAuthenticate {
   position: relative;
 }

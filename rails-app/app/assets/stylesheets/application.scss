@@ -35,3 +35,10 @@
 .unselectable {
   user-select: none;
 }
+
+/*
+ * Remove annoying margin rules for Bootstrap rows
+ */
+.row {
+  margin: 0px;
+}

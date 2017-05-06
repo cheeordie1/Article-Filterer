@@ -16,6 +16,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+/*
+ * Basic CSS classes that are generally useful
+ */
 .vert-center {
   top: 50%;
   transform: translateY(-50%);
@@ -34,6 +37,13 @@
 
 .unselectable {
   user-select: none;
+}
+
+.background-img {
+  position: fixed;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh;	
 }
 
 /*

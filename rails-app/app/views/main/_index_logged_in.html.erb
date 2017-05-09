@@ -20,4 +20,11 @@
     <input placeholder="Enter article url" type="text" name="url" id="url"></br>
     <input type="submit" name="read" value="Read"><input type="submit" name="add" value="Add">
   </form>
+  <% if @article %>
+    <h3><%= @article.title %></h3>
+    <div><%= @article.text %></div>
+  <% end %>
+  <% if @added %>
+    <p> Article successfully added <p>
+  <% end %>  
 </div>

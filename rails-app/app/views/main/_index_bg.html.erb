@@ -2,6 +2,11 @@
   Implementation for a nice background picture for the main page.
   Who knows why?
 -->
-<div id="indexBGContainer">
-  <%=image_tag image_path("splatter1"), class: "background-img" %>
-</div>
+<% if current_user %>
+  <div id="indexLoggedInContainer">
+  </div>  
+<% else %>
+  <div id="indexBGContainer">
+    <%=image_tag image_path("splatter1"), class: "background-img" %>
+  </div>  
+<% end %>

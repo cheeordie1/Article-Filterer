@@ -1,0 +1,23 @@
+<!--
+  Implementation for front page display for user who is logged in.
+  Display includes:
+    - ability to filter an article's text and highlight
+      only "new information"
+    - ability to add single new article to the list of "read" articles
+      via a URL
+    - ability to add multiple new articles to the list of "read" articles
+      via a .txt file of the following format:
+  
+      1 http://www.article.com
+      2 http://www.article1.com
+      3 http://www.article2.com
+      4 http://www.article3.com
+      ... 
+-->
+<div id="indexLoggedInContainer">
+  <form method="post" action="action">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    <input placeholder="Enter article url" type="text" name="url" id="url"></br>
+    <input type="submit" name="read" value="Read"><input type="submit" name="add" value="Add">
+  </form>
+</div>

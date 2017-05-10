@@ -5,8 +5,10 @@
   <% current_user = true %>
 <!-- DELETE THIS WHEN NOT IN DEV -->
 
-<!-- Render a nice background image for unauthenticated users -->
-<%= render "index_bg" %>
+<% if !current_user %>
+  <!-- Render a nice background image for unauthenticated users -->
+  <%= render "index_bg" %>
+<% end %>
 
 <div id="indexContainer">
   <!-- Render partial containing header bar at top of home page -->

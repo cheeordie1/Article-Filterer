@@ -7,12 +7,11 @@ SAMPLES_DIR = 'sample_datasets'
 sample_corpora = {
         'gsw':
         [
-            'http://www.slcdunk.com/2017/5/2/15513254/nba-playoffs-2017-utah-jazz-vs-golden-state-warriors-schedule-and-primer',
-            'http://www.nba.com/article/2017/05/01/playoffs-numbers-preview-golden-state-warriors-utah-jazz',
-            'http://www.knbr.com/2017/04/30/schedule-announced-for-warriors-second-round-series-vs-jazz',
             'http://www.espn.com/espn/feature/story/_/page/presents19256296/golden-state-warriors-steph-curry-stopped-only-kevin-durant',
             'http://www.espn.com/nba/story/_/id/19287923/golden-state-warriors-preferred-play-los-angeles-clippers-next-part-enjoy-la-nightlife',
-            'http://www.mercurynews.com/2017/05/02/monta-ellis-among-we-believe-warriors-returning-to-oracle-arena/'
+            'http://www.mercurynews.com/2017/05/02/monta-ellis-among-we-believe-warriors-returning-to-oracle-arena/',
+            'http://www.cbssports.com/nba/news/nba-playoffs-warriors-jazz-is-david-vs-goliath-yes-but-david-is-a-lot-bigger/',
+            'http://www.sfchronicle.com/warriors/article/Now-the-real-playoffs-begin-for-Warriors-11113274.php'
         ]
 }
 

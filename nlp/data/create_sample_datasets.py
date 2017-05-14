@@ -12,6 +12,14 @@ sample_corpora = {
             'http://www.mercurynews.com/2017/05/02/monta-ellis-among-we-believe-warriors-returning-to-oracle-arena/',
             'http://www.cbssports.com/nba/news/nba-playoffs-warriors-jazz-is-david-vs-goliath-yes-but-david-is-a-lot-bigger/',
             'http://www.sfchronicle.com/warriors/article/Now-the-real-playoffs-begin-for-Warriors-11113274.php'
+        ],
+        'tuval':
+        [
+            'https://en.wikipedia.org/wiki/Hypatia_transracialism_controversy',
+            'http://www.chronicle.com/article/Why-Tuvel-s-Article-So/240029',
+            'http://thephilosophicalsalon.com/if-this-is-feminism-its-been-hijacked-by-the-thought-police/',
+            'http://www.nationalreview.com/article/447419/rebecca-tuvel-controversy-campus-radicals-free-speech-social-justice',
+            'http://nymag.com/daily/intelligencer/2017/05/transracialism-article-controversy.html?mid=twitter-share-di'
         ]
 }
 

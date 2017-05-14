@@ -31,11 +31,10 @@ class WMD(Model):
         print('Checking similarity')
         sims = self.instance[paras_pre]
 
-        sims = np.sum(sims, axis=1)
+        sims = np.max(sims, axis=1)
+        return paras, sims
 
-        least_similar = sims.argsort()[:4]
-        for index in least_similar:
-            print(paras[index])
+
 
         
 

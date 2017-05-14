@@ -15,9 +15,31 @@
       ... 
 -->
 <div id="indexLoggedInContainer">
-  <form method="post" action="action">
-    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-    <input placeholder="Enter article url" type="text" name="url" id="url"></br>
-    <input type="submit" name="read" value="Read"><input type="submit" name="add" value="Add">
-  </form>
+  <div id="indexFormContainer" class="container">
+    <form class="form-horizontal" method="post" action="action">
+      <div class="row">
+        <div class="col-sm-6 hori-center">
+        </div>
+      </div>
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <div class="row">
+        <div class="form-group col-sm-12">
+          <input class="form-control" placeholder="Enter article url" type="text" name="url" id="url">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-6">
+          <input class="btn btn-info indexFormBtn" type="submit" name="read" value="Read">
+          <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
+        </div>
+      </div>
+    </form>
+  </div>
+  <% if @article %>
+    <h3><%= @article.title %></h3>
+    <div><%= @article.text %></div>
+  <% end %>
+  <% if @added %>
+    <p> Article successfully added <p>
+  <% end %>  
 </div>

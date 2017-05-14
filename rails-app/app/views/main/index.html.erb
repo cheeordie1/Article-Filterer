@@ -5,7 +5,7 @@
   <!-- <% current_user = true %> -->
 <!-- DELETE THIS WHEN NOT IN DEV -->
 
-<% if current_user == false %>
+<% if !current_user %>
   <!-- Render a nice background image for unauthenticated users -->
   <%= render "index_bg" %>
 <% end %>

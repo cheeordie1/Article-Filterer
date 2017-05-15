@@ -7,16 +7,17 @@
  */
 #indexContainer {
   position: relative;
-  height: 100vh;
-  width: 100vw;
 }
 
 /*
  * CSS pertaining to top header.
  */
 #headerContainer {
+  position: fixed;
+  z-index: 1;
   margin: 0px;
   padding: 0px;
+  height: 75px;
   width: 100%;
   background-color: #4a105d;
   box-shadow: 0px 4px 15px 0px rgba(20, 19, 153, 0.7);  
@@ -55,9 +56,16 @@
 }
 
 #headerLoginButtonContainer {
-  padding: 0px;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 15px;
+  padding-left: 0px;
+}
+
+#headerLoginText {
+  font-size: 22px;
+}
+
+#headerLabel {
+  background-color: #bf60b2;
 }
 
 #headerLoginButton {
@@ -69,9 +77,18 @@
  * logged in.
  */
 
+#indexLoggedInBGContainer {
+  top: 75px;
+}
+
+#indexBGImage {
+  height: calc( 100vh - 75px );
+  width: 100vw;
+}
+
 #loginInfoContainer {
   position: relative;
-  margin-top: 50px;
+  top: 125px;
   border: 6px solid rgba(249, 208, 94, 0.4);
   border-left: 0px;
   border-right: 0px;
@@ -102,19 +119,38 @@
  */
 #indexLoggedInContainer {
   position: relative;
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  background-image: radial-gradient(circle, #ffffff 0%,#e8e8e8 92%,#ededed 100%);
+  top: 75px;
+  width: 100vw;
+  height: calc( 100vh - 75px );
+}
+
+#indexLoggedInBGContainer {
+  background-image: radial-gradient(circle, #ffffff 0%,#e8e8e8 92%,#ededed 100%);  
+}
+
+#indexLoggedInContentContainer {
+  position: relative;
+  top: 23%;
 }
 
 #indexFormContainer {
   position: relative;
-  margin-top: 17%;
+  border-radius: 15px;
+  padding: 30px;
+  top: 25%;
   width: 60vw;
-  background-color: #000000;
+  border: 1px solid #420342;
+  background-color: #816484;
+}
+
+#indexFormURLContainer {
+  margin-top: 15px;
 }
 
 .indexFormBtn {
   width: 60px;
+}
+
+#articleAddedText {
+  color: #03bb03;
 }

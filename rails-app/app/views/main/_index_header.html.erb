@@ -12,10 +12,10 @@
         <h1 id="headerTitle" class="unselectable">Smarticle</h1>
       </div>
     </div>
-    <div id="headerLoginButtonContainer" class="col-md-3 col-xs-3 col-lg-3 vert-center">
-      <% if current_user %>
+    <div id="headerLoginButtonContainer" class="col-md-3 col-xs-3 col-lg-3 text-right vert-center">
+      <% if current_user || true %>
         <!-- Render welcome message if logged in already -->
-        <h1 class="text-primary">Welcome, <span class="label label-success"><%= current_user().name %></span></h1>
+        <h1 id="headerLoginText" class="text-primary">Welcome, <span id="headerLabel" class="label">nothing</span></h1>
       <% else %>
         <!-- Render Login Button Partial if not already logged in -->
         <%= link_to 'Login With Facebook', '/auth/facebook', id: "headerLoginButton", class: 'btn btn-primary hori-center' %>

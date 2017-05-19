@@ -38,7 +38,7 @@
         </div> 
       </form>
     </div>
-    <% if @added || true %>
+    <% if @added %>
       <div id="articleAddedContainer" class="container">
         <div class="row">
           <div class="col-sm-12 text-center">
@@ -48,8 +48,7 @@
       </div>
     <% end %> 
     <% if @article %>
-      <h3><%= @article.title %></h3>
-      <div><%= @article.text %></div>
+      <%= render "index_article" %>
     <% end %>
   </div>
 </div>

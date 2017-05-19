@@ -1,0 +1,14 @@
+<!--
+  HTML for rendering article provided via the article object.
+-->
+<div id="articleContainer" class="container">
+  <div id="articleBackgroundRow" class="row">
+    <div id="articleBackground" class="col-sm-offset-2 col-sm-8">
+      <% @article.getParagraphs().each_with_index do |paragraph, idx| %>
+        <p id="articleParagraph<%= raw idx %>" class="articleParagraph">
+          <%= raw paragraph %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

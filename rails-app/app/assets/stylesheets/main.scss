@@ -154,3 +154,23 @@
 #articleAddedText {
   color: #03bb03;
 }
+
+/*
+ * CSS pertaining to article rendered on main page.
+ */
+#articleContainer {
+  width: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;  
+}
+
+#articleBackground {
+  border: 1px solid #000000;
+  background-color: #ffffff;
+  min-height: 650px;
+}
+
+.articleParagraph {
+  text-indent: 50px;
+  color: #000000;
+}

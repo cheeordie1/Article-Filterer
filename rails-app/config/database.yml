@@ -21,13 +21,13 @@ default: &default
   # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: article-filter_test
-  host: localhost
+  host: postgres
   username: pguser
   password: dbpass
 
 development:
   <<: *default
-  host: localhost
+  host: postgres
   username: pguser
   password: dbpass
   # The specified database role being used to connect to postgres.

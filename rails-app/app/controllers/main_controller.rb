@@ -1,3 +1,5 @@
+require 'net/http'
+
 class MainController < ApplicationController
 
     def index
@@ -28,9 +30,15 @@ class MainController < ApplicationController
     def addArticleForUser(url, user)
         article = Article.find_by_url(url)
         if article == nil
-            cmd = "python3 app/scripts/get_article.py %s" % Shellwords.escape(url)
-            out, err, st = Open3.capture3(cmd)
-            artjson = JSON.parse(out)
+            data = {url: url}
+            http = Net::HTTP.new('scraper', 5000)
+            request = Net::HTTP::Post.new('/get_article', {'Content-Type' => 'application/json'})
+            request.body = data.to_json
+            response = http.request(request)
+            # cmd = "python3 app/scripts/get_article.py %s" % Shellwords.escape(url)
+            # out, err, st = Open3.capture3(cmd)
+            puts response.body()
+            artjson = JSON.parse(response.body())
             article = Article.new()
             article[:title] = artjson["title"]
             article[:text] = artjson["text"]

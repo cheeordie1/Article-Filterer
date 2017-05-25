@@ -27,10 +27,14 @@ def highlight_tfidf(new_article, user_history, logger):
     for i in range(len(paras)):
         entry = {}
         entry['text'] = paras[i]
-        if sims[i] > 0.3:
+        if sims[i] > 0.1:
             entry['highlighted'] = True
+            logger.info("TRUE")
+            logger.info(sims[i])
         else:
             entry['highlighted'] = False
+            logger.info("FALSE")
+            logger.info(sims[i])
         paragraphs.append(entry)
     return paragraphs
 

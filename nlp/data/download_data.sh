@@ -4,7 +4,6 @@ unzip glove.840B.300d.zip
 rm glove.840B.300d.zip
 mv glove.840B.300d.txt word2vec
 python3 word2vec/save_word_vecs.py
-rm word2vec/glove.840B.300d.txt
 mv word_vectors* word2vec
 
 

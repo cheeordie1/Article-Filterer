@@ -1,10 +1,12 @@
 import numpy as np
 import nltk
 import re
-import pickle
+import pickle as pkl
+import sys
 
 from models.model import Model
 from sklearn.decomposition import PCA
+from sklearn.feature_extraction.text import CountVectorizer
 from collections import defaultdict
 
 EMBED_PATH = 'data/word2vec/word_vectors'
@@ -24,29 +26,24 @@ class SIF(Model):
         self.beta = beta
         self.a = a
         self.threshold = threshold
-        with open(EMBED_PATH, 'rt') as f:
-            data = f.readlines()
-        info = data[0].split()
-        #vocab_len = float(info[0])
-        #dims = float(info[1])
-        self.word_embeddings = {}
-        for line in data[1:]:
-            entry = line.split()
-            if isfloat(entry[1]):
-                self.word_embeddings[entry[0]] = np.array([float(num) for num in entry[1:]])
-        pickle.dump(self.word_embeddings, open("word_embeddings.txt", "wb"))
+
+        # TODO set up a server to fetch these from
+        print('loading word vectors')
+        self.word_embeddings = np.load('data/word2vec/word_embedding.npy')
+        with open('data/word2vec/vocab.pkl', 'rb') as f:
+            self.vocab = pkl.load(f)
+        print('finished loading word vectors')
 
     def load_corpus(self, corpus):
         # First compute all unigram probabilites
         all_words = [word.lower() for article in corpus
                                   for word in nltk.tokenize.word_tokenize(article)]
         self.probabilites = self.compute_unigram_probs(all_words)
-        
+
         # Compute Sentence embeddings
         sentences = [sent for article in corpus
                     for sent in nltk.tokenize.sent_tokenize(article)]
         self.sentence_embeddings = self.compute_sentence_embeddings(
-                                    self.word_embeddings,
                                     sentences,
                                     self.a,
                                     self.probabilites)
@@ -66,22 +63,25 @@ class SIF(Model):
     def compute_min_dist(sent):
         return min([abs(np.sum(sent - embed)) for embed in self.sentence_embeddings])
 
-    def compute_sentence_embeddings(self, words, sentences, a, probabilities):
+    def compute_sentence_embeddings(self, sentences, a, probabilities):
+
+        # compute weights
         # Shape??
         new_embeddings = []
         for s in sentences:
             word_calcs = []
-            for word in s:
-                if word in words:
-                    word_calcs.append((a / (a + probabilities[word])) * words[word])
-            vs = (1 / np.linalg.norm(s)) * np.sum(np.asarray(word_calcs))
+            for word in nltk.tokenize.word_tokenize(s):
+                if word in self.vocab and word.lower() in probabilities:
+                    word_calcs.append((a / (a + probabilities[word.lower()])) * self.word_embeddings[self.vocab[word]])
+            vs = np.sum(word_calcs, axis=0) / len(word_calcs)
             new_embeddings.append(vs)
+
         pca = PCA()
         pca.fit(np.asarray(new_embeddings))
         u = pca.components_[0]
         returned_embeddings = []
         for vs in new_embeddings:
-            returned_embeddings.append(vs - np.matmul(u, np.matmul(u.transpose(), vs)))
+            returned_embeddings.append(vs - vs.dot(u.T) * u)
         return np.asarray(returned_embeddings)
     
     def compute_unigram_probs(self, corpus):

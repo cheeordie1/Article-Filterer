@@ -2,6 +2,7 @@ import argparse
 import pickle as pkl
 from models.tfidf_bog import TFIDF_BOG
 from models.wmd import WMD
+from models.sif import SIF
 import sys
 import csv
 
@@ -25,7 +26,7 @@ def print_similarities(paras, sims, scores):
     #     print()
 
 def test_corpus(corpus, new_article,scores):
-    model = TFIDF_BOG()
+    model = SIF(1, 1, 1, 1000)#TFIDF_BOG()
     model.load_corpus(corpus)
     paras, sims = model.highlight(new_article)
     print_similarities(paras, sims, scores)

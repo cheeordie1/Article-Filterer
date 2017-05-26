@@ -3,6 +3,7 @@ class MainController < ApplicationController
     def index
         if params["article"]
             @article = Article.find(params["article"])
+            puts "size is " << @article.getParagraphs().size.to_s()
         else
             @article = nil
         end
@@ -28,7 +29,7 @@ class MainController < ApplicationController
     def addArticleForUser(url, user)
         article = Article.find_by_url(url)
         if article == nil
-            cmd = "python3 app/scripts/get_article.py %s" % Shellwords.escape(url)
+            cmd = "python app/scripts/get_article.py %s" % Shellwords.escape(url)
             out, err, st = Open3.capture3(cmd)
             artjson = JSON.parse(out)
             article = Article.new()

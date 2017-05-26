@@ -7,7 +7,7 @@ class Article < ActiveRecord::Base
     end
 
     def getParagraphs
-      return self.text
+      return self.text.split("\n\n")
     end
 
 end

@@ -133,6 +133,9 @@
   top: 23%;
 }
 
+/*
+ * CSS for URL entry form on logged in user page
+ */
 #indexFormContainer {
   position: relative;
   border-radius: 15px;
@@ -145,6 +148,14 @@
 
 #indexFormURLContainer {
   margin-top: 15px;
+}
+
+#urlFormTabs {
+  border-bottom: 0px;
+}
+
+.urlFormTab > a {
+  color: #21bad4;
 }
 
 .indexFormBtn {

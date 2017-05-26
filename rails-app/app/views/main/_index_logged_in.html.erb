@@ -20,22 +20,45 @@
   <div id="indexLoggedInContentContainer">
     <div id="indexFormContainer" class="container">
       <form class="form-horizontal" method="post" action="action">
+        <!-- Form Tabs -->
         <div class="row">
-          <div class="col-sm-6 hori-center">
+          <div class="col-sm-12" style="padding: 0px;">
+            <ul id="urlFormTabs" class="nav nav-tabs">
+              <li class="active urlFormTab"><a data-toggle="tab" href="#textURLTab">Text</a></li>
+              <li class="urlFormTab"><a data-toggle="tab" href="#fileURLTab">File</a></li>
+            </ul>
           </div>
         </div>
-        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-        <div class="row">
-          <div id="indexFormURLContainer" class="form-group col-sm-12">
-            <input class="form-control" placeholder="Enter article url" type="text" name="url" id="url">
+
+        <!-- Form content division -->
+        <div class="tab-content">
+          <!-- Text URL -->
+          <div id="textURLTab" class="tab-pane fade in active">        
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <!-- Text URL Input -->
+            <div class="row">
+              <div id="indexFormURLContainer" class="form-group col-sm-12">
+                <input class="form-control" placeholder="Enter article url" type="text" name="url" id="url">
+              </div>
+            </div>
+            <!-- Text URL Form Buttons -->
+            <div class="row">
+              <div class="form-group col-sm-6">
+                <input class="btn btn-info indexFormBtn" type="submit" name="read" value="Read">
+                <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
+              </div>
+            </div> 
+          </div>
+          <!-- File URL -->
+          <div id="fileURLTab" class="tab-pane fade">
+            <!-- File Input -->
+            <div class="row">
+              <div id="indexFormURLContainer" class="form-group col-sm-12">
+                <input class="form-control" type="file" name="url" id="url">
+              </div>
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="form-group col-sm-6">
-            <input class="btn btn-info indexFormBtn" type="submit" name="read" value="Read">
-            <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
-          </div>
-        </div> 
       </form>
     </div>
     <% if @added %>

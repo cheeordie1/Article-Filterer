@@ -1,0 +1,55 @@
+version: "2"
+
+services:
+
+  rails:
+    build: ./rails-app
+    links:
+      - postgres
+      - scraper
+      - nlp
+    volumes:
+      - ./rails-app:/rails-app
+    ports:
+      - "3000:3000"
+    environment:
+      - FACEBOOK_KEY=1170752576384836
+      - FACEBOOK_SECRET=4c3f98dcf6e42d952d1479d49ddd3a1f
+    security_opt:
+      - apparmor:unconfined
+    command: "rails server -b 0.0.0.0"
+
+  postgres:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=pguser
+      - POSTGRES_PASSWORD=dbpass
+    security_opt:
+      - apparmor:unconfined
+
+  scraper:
+    build: ./scraper
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./scraper:/home/ubuntu/flask
+    entrypoint: "python3 /home/ubuntu/flask/app.py"
+    security_opt:
+      - apparmor:unconfined
+
+  nlp:
+    build: ./nlp
+    links:
+      - postgres
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./nlp:/home/ubuntu/flask
+    entrypoint: "python3 /home/ubuntu/flask/app.py"
+    security_opt:
+      - apparmor:unconfined
+

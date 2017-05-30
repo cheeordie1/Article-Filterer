@@ -2,9 +2,9 @@
 class Model():
     """
     Args:
-        corpus: a list of {'title': title, 'text': text, 'url': url} dicts
+        corpus: a list of document strings
     """
-    def load_corpus(corpus):
+    def load_corpus(self, corpus):
         raise NotImplementedError
 
     """
@@ -13,6 +13,6 @@ class Model():
     Returns:
         indices: A list of tuples containing start and end indices for highlighted sections
     """
-    def highlight(article):
+    def highlight(self, article):
         raise NotImplementedError
     

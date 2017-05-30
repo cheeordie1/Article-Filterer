@@ -19,8 +19,25 @@ class MainController < ApplicationController
             article = addArticleForUser(params['url'], current_user)         
             redirect_to root_url(:article => article.id)
         else
+          result = "added"
+          if params['formType'] == "text"
             addArticleForUser(params['url'], current_user)
-            redirect_to root_url(:result => "added")
+          else
+            file_data = params['file']
+            if file_data.respond_to?(:read)
+              xml_contents = file_data.read
+            elsif file_data.respond_to?(:path)
+              xml_contents = File.read(file_data)
+            else
+              logger.error "Bad file_data: #{file_data.class.name}: #{file_data.inspect}"
+              result = "error"
+            end
+            if result != "error"
+              xml_contents.each_line do |url|
+              addArticleForUser(url, current_user)
+            end
+          end
+          redirect_to root_url(:result => result)
         end  
     end
 

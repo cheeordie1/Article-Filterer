@@ -5,7 +5,7 @@
   <!-- Render partial containing header bar at top of home page -->
   <%= render "index_header" %>
 
-  <% if current_user || true %>
+  <% if current_user %>
     <!-- If the user is logged into profile, render article parsing html -->
     <%= render "index_logged_in" %>
   <% else %>

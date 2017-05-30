@@ -15,25 +15,71 @@
       ... 
 -->
 <div id="indexLoggedInContainer">
-  <div id="indexFormContainer" class="container">
-    <form class="form-horizontal" method="post" action="action">
+  <div id="indexLoggedInBGContainer" class="background">
+  </div>
+  <div id="indexLoggedInContentContainer">
+    <div id="indexFormContainer" class="container">
+      <!-- Form Tabs -->
       <div class="row">
-        <div class="col-sm-6 hori-center">
+        <div class="col-sm-12" style="padding: 0px;">
+          <ul id="urlFormTabs" class="nav nav-tabs">
+            <li class="active urlFormTab"><a id="urlFormTabLink1" data-toggle="tab" href="#textURLTab">Text</a></li>
+            <li class="urlFormTab"><a id="urlFormTabLink2" data-toggle="tab" href="#fileURLTab">File</a></li>
+          </ul>
         </div>
       </div>
-      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-      <div class="row">
-        <div class="form-group col-sm-12">
-          <input class="form-control" placeholder="Enter article url" type="text" name="url" id="url">
+      <!-- Form content division -->
+      <div class="tab-content">
+        <!-- Form for Text URL -->
+        <form id="textURLTab" class="form-horizontal tab-pane fade in active" method="post" action="action">
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="formType" value="text" type="hidden">
+          <!-- Text URL Input -->
+          <div class="row">
+            <div id="indexFormURLContainer" class="form-group col-sm-12">
+              <input class="form-control" placeholder="Enter article url" type="text" name="url" id="url">
+            </div>
+          </div>
+          <!-- Text URL Form Buttons -->
+          <div class="row">
+            <div id="indexFormBtnGroup1" class="form-group col-sm-6">
+              <input class="btn btn-info indexFormBtn" type="submit" name="read" value="Read">
+              <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
+            </div>
+          </div> 
+        </form>
+
+        <!-- Form For File URL -->
+        <form id="fileURLTab" class="form-horizontal tab-pane fade" method="post" action="action" enctype="multipart/form-data">
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input name="formType" value="file" type="hidden">
+          <!-- File Input -->
+          <div class="row">
+            <div id="indexFormURLContainer" class="form-group col-sm-12">
+              <input class="form-control" type="file" name="file" id="formFile">
+            </div>
+          </div>
+          <!-- File URL buttons -->
+          <div class="row">
+            <div id="indexFormBtnGroup2" class="form-group col-sm-6 indexFormBtnGroup">
+              <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
+            </div>
+          </div> 
+        </form>
+      </div>
+    </div>
+    <% if @added %>
+      <div id="articleAddedContainer" class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <h1 id="articleAddedText">Article successfully added!</h1>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="form-group col-sm-6">
-          <input class="btn btn-info indexFormBtn" type="submit" name="read" value="Read">
-          <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
-        </div>
-      </div>
-    </form>
+    <% end %> 
+    <% if @article %>
+      <%= render "index_article" %>
+    <% end %>
   </div>
   <% if @article %>
     <h3><%= @article.title %></h3>

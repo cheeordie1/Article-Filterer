@@ -81,17 +81,7 @@
       <%= render "index_article" %>
     <% end %>
   </div>
-  <% if @article %>
-    <h3><%= @article.title %></h3>
-    <% @highlighted.each do |h| %>
-      <% if h["highlighted"] %>
-        <span style="background-color: #FFFF00"><%= h["text"] %></span>
-      <% else %>
-        <span><%= h["text"] %></span>
-      <% end %>
-    <% end %>
-  <% end %>
   <% if @added %>
     <p> Article successfully added <p>
-  <% end %>  
+  <% end %>
 </div>

@@ -5,7 +5,6 @@ class MainController < ApplicationController
     def index
         if params["article"]
             @article = Article.find(params["article"])
-            @highlighted = highlightArticle(@article, current_user)
         else
             @article = nil
         end
@@ -36,7 +35,8 @@ class MainController < ApplicationController
             end
             if result != "error"
               xml_contents.each_line do |url|
-              addArticleForUser(url, current_user)
+                addArticleForUser(url, current_user)
+              end
             end
           end
           redirect_to root_url(:result => result)
@@ -44,16 +44,6 @@ class MainController < ApplicationController
     end
 
     private
-
-    def highlightArticle(article, user)
-        http = Net::HTTP.new('nlp', 5001)
-        request = Net::HTTP::Post.new('/highlight', {'Content-Type' => 'application/json'})
-        data = {article_id: article.id, user_id: user.id}
-        request.body = data.to_json
-        response = http.request(request)
-        highlighted = JSON.parse(response.body())
-        return highlighted
-    end
 
     def addArticleForUser(url, user)
         article = Article.find_by_url(url)
@@ -65,7 +55,6 @@ class MainController < ApplicationController
             response = http.request(request)
             # cmd = "python3 app/scripts/get_article.py %s" % Shellwords.escape(url)
             # out, err, st = Open3.capture3(cmd)
-            puts response.body()
             artjson = JSON.parse(response.body())
             article = Article.new()
             article[:title] = artjson["title"]

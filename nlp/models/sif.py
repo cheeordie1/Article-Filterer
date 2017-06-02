@@ -172,6 +172,10 @@ class SIF(Model):
         return new_chunks
 
     def process_articles(self, corpus, load):
+        """
+        Takes in a corpus and processes it.  Updates model
+        variables if load is set to true.
+        """
         chunks = []
         for article in corpus:
             parsed = preprocess(article, self.mode, self.chunk_size)

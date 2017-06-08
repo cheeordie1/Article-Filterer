@@ -18,7 +18,7 @@
         <h1 id="headerLoginText" class="text-primary">Welcome, <span id="headerLabel" class="label"><%= raw current_user().name %></span></h1>
       <% else %>
         <!-- Render Login Button Partial if not already logged in -->
-        <%= link_to 'Login With Facebook', '/auth/facebook', id: "headerLoginButton", class: 'btn btn-primary hori-center' %>
+        <%= link_to 'Login With Facebook', '/auth/facebook', id: "headerLoginButton", class: 'btn btn-primary' %>
       <% end %>
     </div>
   </div>

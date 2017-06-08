@@ -2,19 +2,34 @@ import argparse
 import pickle as pkl
 from models.tfidf_bog import TFIDF_BOG
 from models.wmd import WMD
+from models.sif import SIF
 import sys
+import csv
 
-def print_similarities(paras, sims):
-    index = sims.argsort()
-    for ind in index:
-        print(paras[ind], sims[ind])
-        print()
+def print_similarities(paras, sims, scores):
+    totalError = 0.0
+    n = len(scores)
+    for i in range(n):
+        print("PARAGRAPH:")
+        print(paras[i])
+        print("Similarity to known material assigned by algorithm: {}".format(sims[i]))
+        print("Similarity to known material assigned by reader's judgement: {}".format(scores[i]))
+        error = abs(scores[i]-sims[i])
+        print("Error: {}".format(error))
+        totalError+=error
+    avgError = totalError/n
+    print("\nAverage Error for this algorithm and dataset: {}".format(avgError))
 
-def test_corpus(corpus, new_article):
-    model = TFIDF_BOG()
+    # index = sims.argsort()
+    # for ind in index:
+    #     print(paras[ind], sims[ind])
+    #     print()
+
+def test_corpus(corpus, new_article,scores):
+    model = SIF(1, 1, 1, 1000)#TFIDF_BOG()
     model.load_corpus(corpus)
     paras, sims = model.highlight(new_article)
-    print_similarities(paras, sims)
+    print_similarities(paras, sims, scores)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -23,11 +38,18 @@ if __name__ == '__main__':
 
     name = args.corpus_name
 
+
     print('Testing on %s corpus' % name)
     # load corpus
     with open('data/sample_datasets/%s.pkl' % name, 'rb') as f:
         corpus = pkl.load(f)
         corpus = [art['text'] for art in corpus]
+
+    # load the subjective 'newness' scores from reading the new article
+    with open('data/sample_datasets/%s_paragraph_scores.csv' % name, 'rt') as f:
+        reader = csv.reader(f)
+        paragraph_newness_scores = list(reader)
+        scores = [(5.0-float(s[0]))/5.0 for s in paragraph_newness_scores]
 
     #corpus = [
             #'Jackie Moon\'s mom invented the alley-oop',
@@ -40,8 +62,8 @@ if __name__ == '__main__':
     article = corpus[-1]
     corp = corpus[:-1]
 
-    #print(corpus)
-    #print(article)
+    # print(corpus)
+    # print(article)
            
-    test_corpus(corp, article)
+    test_corpus(corp, article,scores)
 

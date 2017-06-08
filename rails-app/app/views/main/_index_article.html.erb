@@ -1,0 +1,24 @@
+<!--
+  HTML for rendering article provided via the article object.
+-->
+<div id="articleContainer" class="container">
+  <div id="articleBackgroundRow" class="row">
+    <div id="articleBackground" class="col-sm-offset-1 col-sm-10">
+      <h1 id="articleTitle" class="articleTitle text-center"><%= raw @article.getTitle() %></h1>
+      <% @article.getParagraphs(current_user).each_with_index do |paragraph, idx| %>
+        <% if paragraph["highlighted"] %>
+          <p id="articleParagraph<%= raw idx %>" class="articleParagraph">
+            <span class="highlighted">
+              <%= raw paragraph["text"] %>
+            </span>
+          </p>
+        <% else %>
+          <p id="articleParagraph<%= raw idx %>" class="articleParagraph">
+            <%= raw paragraph["text"] %>
+          </p>
+        <% end %>
+      <% end %>
+      <h6 id="articleAuthors" class="articleAuthors text-right">authored by <%= @article.authors %></h6>
+    </div>
+  </div>
+</div>

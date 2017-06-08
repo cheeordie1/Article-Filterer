@@ -13,3 +13,42 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+/*
+ * Basic CSS classes that are generally useful
+ */
+.vert-center {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hori-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hori-vert-center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.unselectable {
+  user-select: none;
+}
+
+.background {
+  position: fixed;
+  z-index: -10;
+  width: 100vw;
+  height: 100vh;	
+}
+
+/*
+ * Remove annoying margin rules for Bootstrap rows
+ */
+.row {
+  margin: 0px;
+}

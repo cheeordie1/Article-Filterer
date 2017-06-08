@@ -1,13 +1,14 @@
-<div class="jumbotron">
-  <h1>Welcome!</h1>
+<!-- Import Fonts -->
+<link href="https://fonts.googleapis.com/css?family=News+Cycle:700" rel="stylesheet">
+<div id="indexContainer">
+  <!-- Render partial containing header bar at top of home page -->
+  <%= render "index_header" %>
+
   <% if current_user %>
-    <form method="post" action="action">
-      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-      <input placeholder="Enter article url" type="text" name="url" id="url" /></br>
-      <input type="submit" name="read" value="Read"><input type="submit" name="add" value="Add">
-    </form>
+    <!-- If the user is logged into profile, render article parsing html -->
+    <%= render "index_logged_in" %>
   <% else %>
-    <p>Authenticate via one of the social networks to get started.</p>
+    <!-- If the user is not logged into profile, render login request -->
+    <%= render "index_not_logged_in" %>      
   <% end %>
-  
 </div>

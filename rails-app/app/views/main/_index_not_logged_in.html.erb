@@ -1,0 +1,27 @@
+<!--
+  Implementation for front page display for a user who is
+  not currently logged in. CSS defined in main.css 
+-->
+<div id="indexLoggedInBGContainer" class="background">
+  <%= image_tag image_path("splatter1"), id: "indexBGImage" %>
+</div>
+<div id="loginInfoContainer" class="jumbotron">
+  <h1>Welcome!</h1>
+  <div class="row">
+    <div id="loginInfoDescriptionContainer" class="col-md-6 col-xs-6 col-lg-6 hori-center">
+      <p id="loginInfoDescription">
+        Smarticle is an application that builds a personal history of viewed 
+        articles for each user. Using this history, we are able to determine
+        via natural language techniques what information in a new article is
+        potentially new information and what is old information. We will
+        highlight the information in articles submitted that we think a user
+        has not read before based on their stored history. Please log in via 
+        Facebook in the top right of the page in order to start building
+        your own personal profile!  
+      </p>
+    </div>
+  </div>
+  <p id="loginInfoAuthenticate">
+    Authenticate via Facebook using the button above to get started.
+  </p>
+</div>

@@ -1,3 +1,222 @@
 // Place all the styles related to the main controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/*
+ * CSS pertaining to top level of index page
+ */
+#indexContainer {
+  position: relative;
+}
+
+/*
+ * CSS pertaining to top header.
+ */
+#headerContainer {
+  position: fixed;
+  z-index: 1;
+  margin: 0px;
+  padding: 0px;
+  height: 75px;
+  width: 100%;
+  background-color: #4a105d;
+  box-shadow: 0px 4px 15px 0px rgba(20, 19, 153, 0.7);  
+}
+
+#headerRow {
+  position: relative;
+  width: 100%;
+  height: 75px;
+}
+
+#headerLogoContainer {
+  // TODO make a logo and fill in properties
+}
+
+/*
+ * CSS to change the title at top of page.
+ */
+#headerTitleContainer {
+  height: 100%;
+}
+
+#header {
+  position: absolute;
+  margin: 0px;
+  padding: 0px;
+}
+
+#headerTitle {
+  position: sticky;
+  text-align: center;
+  font-size: 55px;
+  position: sticky;
+  text-shadow: 0px 0px 12px #461d1d;
+  color: #ffffff;
+}
+
+#headerLoginButtonContainer {
+  padding: 15px;
+  padding-left: 0px;
+}
+
+#headerLoginText {
+  font-size: 22px;
+}
+
+#headerLabel {
+  background-color: #bf60b2;
+}
+
+#headerLoginButton {
+  position: relative;
+}
+
+/*
+ * CSS pertaining to the page displayed for a user who is not
+ * logged in.
+ */
+
+#indexLoggedInBGContainer {
+  top: 75px;
+}
+
+#indexBGImage {
+  height: calc( 100vh - 75px );
+  width: 100vw;
+}
+
+#loginInfoContainer {
+  position: relative;
+  top: 125px;
+  border: 6px solid rgba(249, 208, 94, 0.4);
+  border-left: 0px;
+  border-right: 0px;
+  text-align: center;
+  background-color: rgba(238, 238, 238, 0.93);
+}
+
+#loginInfoDescriptionContainer {
+  // Empty
+}
+
+#loginInfoDescription {
+  position: relative;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  text-align: left;  
+  text-indent: 30px;
+  line-height: 30px;
+}
+
+#loginInfoAuthenticate {
+  position: relative;
+}
+
+/*
+ * CSS pertaining to the index page of a user who is logged in.
+ */
+#indexLoggedInContainer {
+  position: relative;
+  top: 75px;
+  width: 100vw;
+  height: calc( 100vh - 75px );
+}
+
+#indexLoggedInBGContainer {
+  background-image: radial-gradient(circle, #ffffff 0%,#e8e8e8 92%,#ededed 100%);  
+}
+
+#indexLoggedInContentContainer {
+  position: relative;
+  top: 23%;
+}
+
+/*
+ * CSS for URL entry form on logged in user page
+ */
+#indexFormContainer {
+  position: relative;
+  border-radius: 15px;
+  padding: 30px;
+  top: 25%;
+  width: 60vw;
+  border: 1px solid #420342;
+  background-color: #816484;
+}
+
+#indexFormURLContainer {
+  margin-top: 15px;
+}
+
+#urlFormTabs {
+  border-bottom: 0px;
+}
+
+.urlFormTab > a {
+  color: #21bad4;
+}
+
+#urlFormTabLink1 {
+  border-radius: 4px 4px 4px 4px;
+}
+
+#urlFormTabLink2 {
+  border-radius: 4px 4px 4px 4px;
+}
+
+#indexFormBtnGroup1 {
+  margin-bottom: 0px;
+}
+
+#indexFormBtnGroup2 {
+  margin-bottom: 0px;
+}
+
+.indexFormBtn {
+  width: 60px;
+}
+
+#articleAddedText {
+  color: #03bb03;
+}
+
+/*
+ * CSS pertaining to article rendered on main page.
+ */
+#articleContainer {
+  width: 100%;
+  margin-top: 75px;
+  margin-bottom: 50px;  
+}
+
+#articleBackground {
+  border: 1px solid #000000;
+  background-color: #ffffff;
+  min-height: 650px;
+  padding: 70px;
+}
+
+.articleTitle {
+  color: #0c6d9e;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0px;
+  margin-bottom: 50px;
+}
+
+.articleAuthors {
+  margin-top: 10px;
+}
+
+.articleParagraph {
+  text-indent: 20px;
+  color: #000000;
+  line-height: 25px;
+  margin-bottom: 20px;
+}
+
+.highlighted {
+  background-color: #FFFF00;
+}

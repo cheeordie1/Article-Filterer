@@ -5,6 +5,7 @@ from models.wmd import WMD
 from models.sif import SIF
 import sys
 import csv
+from preprocess import preprocess
 
 def print_similarities(paras, sims, scores):
     totalError = 0.0
@@ -26,10 +27,22 @@ def print_similarities(paras, sims, scores):
     #     print()
 
 def test_corpus(corpus, new_article,scores):
-    model = SIF(1, 1, 1, 1000)#TFIDF_BOG()
+    model = SIF(1, 1000, mode= 'sentence')#TFIDF_BOG()
     model.load_corpus(corpus)
+    paras, sims = [], []
+    #for section in preprocess(new_article, mode='section'):
+    #    print("--------------------")
+    #    print(section)
+    #    if len(section) == 0:
+    #        continue
+    #    tempp, simpp = model.highlight(section)
+    #    paras.append(tempp)
+    #    sims.append(simpp)
     paras, sims = model.highlight(new_article)
-    print_similarities(paras, sims, scores)
+    for i in range(len(paras)):
+        print(paras[i])
+        print(sims[i])
+#    print_similarities(paras, sims, scores)
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -46,24 +59,25 @@ if __name__ == '__main__':
         corpus = [art['text'] for art in corpus]
 
     # load the subjective 'newness' scores from reading the new article
-    with open('data/sample_datasets/%s_paragraph_scores.csv' % name, 'rt') as f:
-        reader = csv.reader(f)
-        paragraph_newness_scores = list(reader)
-        scores = [(5.0-float(s[0]))/5.0 for s in paragraph_newness_scores]
-
+#    with open('data/sample_datasets/%s_paragraph_scores.csv' % name, 'rt') as f:
+#        reader = csv.reader(f)
+#        paragraph_newness_scores = list(reader)
+#        scores = [(5.0-float(s[0]))/5.0 for s in paragraph_newness_scores]
+    scores = [0 for i in range(2)]
     #corpus = [
-            #'Jackie Moon\'s mom invented the alley-oop',
-            #'The Golden State Warriors are a basketball team',
-            #'He shot the basketball at the hoop',
-            #]
+    #        'Jackie Moon\'s mom invented the alley-oop',
+    #        'The Golden State Warriors are a basketball team',
+    #        'He shot the basketball at the hoop',
+    #        ]
 
-    #article = 'My hovercraft is full of eels\n\n The Golden State Warriors play basketball'
+    #article = 'My hovercraft is full of eels.  The Golden State Warriors play basketball'
 
-    article = corpus[-1]
-    corp = corpus[:-1]
+    article = corpus[0]
+    corp = corpus[1:]
+    print(len(corpus))
 
-    # print(corpus)
-    # print(article)
+#    print(corpus)
+#    print(article)
            
     test_corpus(corp, article,scores)
 

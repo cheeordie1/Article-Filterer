@@ -56,6 +56,7 @@ class SIF(Model):
         """
         
         # Compute and update sentence embeddings
+        self.word_counts = defaultdict(int)
         self.corpus_sentences += self.process_articles(corpus, True)
         self.update_unigram_probs()
         self.sentence_embeddings = self.compute_sentence_embeddings(
@@ -109,7 +110,15 @@ class SIF(Model):
         """
         Computes the similarity of the closest embedding to the given sentence. 
         """
-        return max([abs(1 - spatial.distance.cosine(sent, embed)) for embed in self.sentence_embeddings])
+        #val_arr = [((abs(1 - spatial.distance.cosine(sent, embed))))**2 for embed in self.sentence_embeddings]
+        #if max(val_arr) == 1.0:
+        #    return 1.0
+        #print(self.corpus_sentences[val_arr.index(max(val_arr))])
+        #val_arr.sort()
+        #print(sum(val_arr[-5:]) / float(5))
+        #print('-------------------')
+        #return sum(val_arr[-5:]) / float(5)
+        return max([((abs(1 - spatial.distance.cosine(sent, embed))))**2 for embed in self.sentence_embeddings])
 
     def compute_sentence_embeddings(self, sentences, a, probabilities):
         """
@@ -117,23 +126,31 @@ class SIF(Model):
         the SIF model.
         """
         new_embeddings = []
+        total_words = 0
+        not_in_vocab = 0
+        def_prob = 0
         for s in sentences:
             if len(s) == 0:
                 continue
             word_calcs = []
             for word in s:
+                total_words += 1
                 if word in self.vocab:
                     if word.lower() in probabilities:
                         word_calcs.append((a / (a + probabilities[word.lower()]))
                                      * self.word_embeddings[self.vocab[word]])
                     else:
+                        def_prob += 1
                         word_calcs.append((a / (a + self.default_probability))
                                     * self.word_embeddings[self.vocab[word]])
                 else:
+                    not_in_vocab += 1
                     word_calcs.append(np.zeros((300)))
             # NEED A DEFAULT for non-matching words
             vs = np.sum(word_calcs, axis=0) / len(word_calcs)
             new_embeddings.append(vs)
+        print("Percentage of words not in vocab: " + str(float(not_in_vocab)/ float(total_words)))
+        print("Percentage of words not in probabilites: " + str(float(def_prob)/ float(total_words)))
         pca = PCA()
         pca.fit(np.asarray(new_embeddings))
         u = pca.components_[0]

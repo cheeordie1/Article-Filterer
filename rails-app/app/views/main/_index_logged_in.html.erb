@@ -68,11 +68,19 @@
         </form>
       </div>
     </div>
-    <% if @added %>
+    <% if @result == "added" %>
       <div id="articleAddedContainer" class="container">
         <div class="row">
           <div class="col-sm-12 text-center">
             <h1 id="articleAddedText">Article successfully added!</h1>
+          </div>
+        </div>
+      </div>
+    <% elsif @result == "error" %>
+      <div id="articleAddedContainer" class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <h1 id="articleAddedText">The requested article could not be parsed.</h1>
           </div>
         </div>
       </div>

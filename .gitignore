@@ -3,3 +3,4 @@
 __pycache__
 glove.840B.300d.txt
 word_vectors*
+nlp/data/word2vec/*

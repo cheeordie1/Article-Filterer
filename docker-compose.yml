@@ -17,7 +17,7 @@ services:
       - FACEBOOK_SECRET=4c3f98dcf6e42d952d1479d49ddd3a1f
     security_opt:
       - apparmor:unconfined
-    command: "rails server -b 0.0.0.0"
+    command: "rails server -b 0.0.0.0 -p 3000"
 
   postgres:
     image: postgres:9.6

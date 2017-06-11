@@ -4,8 +4,7 @@ MIN_SECTION_LENGTH = 50
 
 # takes a string of text
 def tokenize(string):
-    return [w.lower() for w in nltk.tokenize.word_tokenize(string)  \
-                        if w not in nltk.corpus.stopwords.words('english')]
+    return [w for w in nltk.tokenize.word_tokenize(string)]
 
 """Takes in an article string and gives back tokenized lists of words
    Split into sentences, paragraphs or sections based on mode param

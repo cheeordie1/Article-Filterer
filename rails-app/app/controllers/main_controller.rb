@@ -5,20 +5,31 @@ class MainController < ApplicationController
     def index
         if params["article"]
             @article = Article.find(params["article"])
+            p 'Article Id = '
+            p @article.id
         else
             @article = nil
         end
-        if params["result"] == "added"
-            @added = true
+        if params["result"]
+            @result = params["result"]
         else
-            @added = false
+            @result = ''
         end
+        # if params["result"] == "added"
+        #     @added = true
+        # else
+        #     @added = false
+        # end
     end
 
     def action
         if params['read']
-            article = addArticleForUser(params['url'], current_user)         
-            redirect_to root_url(:article => article.id)
+            article = addArticleForUser(params['url'], current_user)   
+            if article == 'error'
+                redirect_to root_url(:result => 'error')  
+            else    
+                redirect_to root_url(:article => article.id)
+            end
         else
           result = "added"
           if params['formType'] == "text"
@@ -53,10 +64,15 @@ class MainController < ApplicationController
             request = Net::HTTP::Post.new('/get_article', {'Content-Type' => 'application/json'})
             request.body = data.to_json
             response = http.request(request)
+            p 'response from parser'
+            p response
             # cmd = "python3 app/scripts/get_article.py %s" % Shellwords.escape(url)
             # out, err, st = Open3.capture3(cmd)
             artjson = JSON.parse(response.body())
             article = Article.new()
+            if artjson['text'] == nil
+                return 'error'
+            end
             article[:title] = artjson["title"]
             article[:text] = artjson["text"]
             article[:url] = url

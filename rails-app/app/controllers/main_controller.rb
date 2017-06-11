@@ -15,6 +15,11 @@ class MainController < ApplicationController
         end
     end
 
+    def clear
+      UserArticle.where(user: current_user).destroy_all
+      redirect_to_root_path
+    end
+
     def action
         if params['read']
             article = addArticleForUser(params['url'], current_user)         

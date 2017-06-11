@@ -67,6 +67,10 @@
           </div> 
         </form>
       </div>
+      <!-- Clear History Button -->
+      <div id="clearHistory">
+        <%= link_to 'Clear History', '/clear', id: "clearHistoryButton", class: 'btn btn-warning' %>
+      </div>
     </div>
     <% if @added %>
       <div id="articleAddedContainer" class="container">

@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   post '/action', to: "main#action"
   root to: 'main#index'
+  get '/clear', to: 'main#clear'
 end

@@ -39,7 +39,27 @@ def highlight_tfidf(new_article, user_history, logger):
     return paragraphs
 
 
-def highlight_for_user(user_id, article_id, logger):
+def highlight_sif(model, new_article, user_history, logger):
+    logger.info(user_history)
+    model.load_corpus(user_history)
+    paras, sims = model.highlight(new_article)
+    print(sims)
+    paragraphs = []
+    for i in range(len(paras)):
+        entry = {}
+        entry['text'] = paras[i]
+        if sims[i] < model.threshold:
+            entry['highlighted'] = True
+            logger.info("TRUE")
+            logger.info(sims[i])
+        else:
+            entry['highlighted'] = False
+            logger.info("FALSE")
+            logger.info(sims[i])
+        paragraphs.append(entry)
+    return paragraphs
+
+def highlight_for_user(model, user_id, article_id, logger):
     conn = psycopg2.connect("host=postgres dbname=article-filter_test user=pguser password=dbpass")
     cur = conn.cursor()
     cur.execute(('SELECT a.text FROM articles a INNER JOIN user_articles ua ' 
@@ -60,7 +80,7 @@ def highlight_for_user(user_id, article_id, logger):
     article = fetchall[0][0]
     #logger.info(article)
 
-    result = highlight_tfidf(article, user_history, logger)
+    result = highlight_sif(model, article, user_history, logger)
     #print(json.dumps(result))
     return result
 

@@ -44,8 +44,8 @@ class SIF(Model):
         self.default_probability = 1e-2
 
         # TODO set up a server or database to fetch these from
-        self.word_embeddings = np.load('data/word2vec/word_embedding.npy')
-        with open('data/word2vec/vocab.pkl', 'rb') as f:
+        self.word_embeddings = np.load('/home/ubuntu/flask/data/word2vec/word_embedding.npy')
+        with open('/home/ubuntu/flask/data/word2vec/vocab.pkl', 'rb') as f:
             self.vocab = pkl.load(f)
 
     def load_corpus(self, corpus):
@@ -56,7 +56,9 @@ class SIF(Model):
         """
         
         # Compute and update sentence embeddings
-        self.corpus_sentences += self.process_articles(corpus, True)
+        self.word_counts = defaultdict(int)
+        self.total_count = 0
+        self.corpus_sentences = self.process_articles(corpus, True)
         self.update_unigram_probs()
         self.sentence_embeddings = self.compute_sentence_embeddings(
                                     self.corpus_sentences,

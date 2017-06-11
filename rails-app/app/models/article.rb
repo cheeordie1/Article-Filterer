@@ -9,7 +9,7 @@ class Article < ActiveRecord::Base
     def getParagraphs(user)
       http = Net::HTTP.new('nlp', 5001)
       request = Net::HTTP::Post.new('/highlight', {'Content-Type' => 'application/json'})
-      data = {article_id: article.id, user_id: user.id}
+      data = {article_id: self.id, user_id: user.id}
       request.body = data.to_json
       response = http.request(request)
       highlighted = JSON.parse(response.body())

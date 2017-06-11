@@ -5,7 +5,7 @@
 -->
 <div id="headerContainer" class="container">
   <div id="headerRow" class="row">
-    <div id="headerLoginButtonContainer" class="col-md-3 col-xs-3 col-lg-3 text-right vert-center">
+    <div id="headerLoginButtonContainer" class="col-md-3 col-xs-3 col-lg-3 text-left vert-center">
       <% if current_user %>
         <!-- Render welcome message if logged in already -->
         <h1 id="headerLoginText" class="text-primary">Welcome, <span id="headerLabel" class="label"><%= raw current_user().name %></span></h1>
@@ -20,9 +20,9 @@
         <h1 id="headerTitle" class="unselectable">Smarticle</h1>
       </div>
     </div>
-    <div id="headerLogoutContainer" class="col-md-3 col-xs-3 col-lg-3">
+    <div id="headerLogoutContainer" class="col-md-3 col-xs-3 col-lg-3 text-right vert-center">
       <!-- Logout Button -->
-      <%= if current_user %>
+      <% if current_user %>
         <%= link_to 'Logout', '/logout', id: "headerLogoutButton", class: 'btn btn-danger' %>
       <% end %>
     </div>

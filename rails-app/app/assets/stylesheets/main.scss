@@ -57,10 +57,10 @@
 
 #headerLoginButtonContainer {
   padding: 15px;
-  padding-left: 0px;
 }
 
 #headerLoginText {
+  margin: 0px;
   font-size: 22px;
 }
 
@@ -172,6 +172,27 @@
 
 #indexFormBtnGroup2 {
   margin-bottom: 0px;
+}
+
+#indexFileButton {
+  position: relative;
+  overflow: hidden; 
+}
+
+#indexFileButtonInput {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;  
 }
 
 .indexFormBtn {

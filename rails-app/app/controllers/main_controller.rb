@@ -22,7 +22,7 @@ class MainController < ApplicationController
 
     def action
         if params['read']
-            article = addArticleForUser(params['url'], current_user)         
+            article = addArticleForUser(params['url'], current_user)   
             redirect_to root_url(:article => article.id)
         else
           result = "added"
@@ -58,6 +58,10 @@ class MainController < ApplicationController
             request = Net::HTTP::Post.new('/get_article', {'Content-Type' => 'application/json'})
             request.body = data.to_json
             response = http.request(request)
+            if response == nil
+
+              return nil
+            end
             # cmd = "python3 app/scripts/get_article.py %s" % Shellwords.escape(url)
             # out, err, st = Open3.capture3(cmd)
             artjson = JSON.parse(response.body())

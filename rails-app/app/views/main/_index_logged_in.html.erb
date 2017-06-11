@@ -45,8 +45,6 @@
             <div id="indexFormBtnGroup1" class="form-group col-sm-6">
               <input class="btn btn-info indexFormBtn" type="submit" name="read" value="Read">
               <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
-              <!-- Clear History Button -->
-              <%= link_to 'Clear History', '/clear', id: "clearHistoryButton1", class: 'btn btn-warning' %>
             </div>
           </div> 
         </form>
@@ -58,26 +56,31 @@
           <!-- File Input -->
           <div class="row">
             <div id="indexFormURLContainer" class="form-group col-sm-12">
-              <label id="indexFileButton" class="btn btn-default btn-file">
-                Browse <input type="file" style="display: none;">
-              </label>
+              <input class="form-control" type="file" name="file" id="formFile">
             </div>
           </div>
           <!-- File URL buttons -->
           <div class="row">
             <div id="indexFormBtnGroup2" class="form-group col-sm-6 indexFormBtnGroup">
               <input class="btn btn-success indexFormBtn" type="submit" name="add" value="Add">
-              <%= link_to 'Clear History', '/clear', id: "clearHistoryButton2", class: 'btn btn-warning' %>
             </div>
           </div> 
         </form>
       </div>
     </div>
-    <% if @added %>
+    <% if @result == "added" %>
       <div id="articleAddedContainer" class="container">
         <div class="row">
           <div class="col-sm-12 text-center">
             <h1 id="articleAddedText">Article successfully added!</h1>
+          </div>
+        </div>
+      </div>
+    <% elsif @result == "error" %>
+      <div id="articleAddedContainer" class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+            <h1 id="articleAddedText">The requested article could not be parsed.</h1>
           </div>
         </div>
       </div>
@@ -86,4 +89,7 @@
       <%= render "index_article" %>
     <% end %>
   </div>
+  <% if @added %>
+    <p> Article successfully added <p>
+  <% end %>
 </div>

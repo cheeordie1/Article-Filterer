@@ -11,8 +11,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from collections import defaultdict
 from scipy import spatial
 
-EMBED_PATH = 'data/word2vec/word_vectors'
-
 class SIF(Model):
     """
     This class implements the SIF model.  The first section are methods
@@ -44,8 +42,10 @@ class SIF(Model):
         self.default_probability = 1e-2
 
         # TODO set up a server or database to fetch these from
-        self.word_embeddings = np.load('/home/ubuntu/flask/data/word2vec/word_embedding.npy')
-        with open('/home/ubuntu/flask/data/word2vec/vocab.pkl', 'rb') as f:
+#        self.word_embeddings = np.load('/home/ubuntu/flask/data/word2vec/word_embedding.npy')
+        self.word_embeddings = np.load('data/word2vec/word_embedding.npy')
+        #with open('/home/ubuntu/flask/data/word2vec/vocab.pkl', 'rb') as f:
+        with open('data/word2vec/vocab.pkl', 'rb') as f:
             self.vocab = pkl.load(f)
 
     def load_corpus(self, corpus):
@@ -100,7 +100,7 @@ class SIF(Model):
             art_p, art_s = self.highlight(article)
             paras.append(art_p)
             sims.append(art_c)
-        return paras, sims
+        return paras, sims, unparsed
 
     """
     Functions after this are class helper functions.  Generally should
@@ -111,15 +111,8 @@ class SIF(Model):
         """
         Computes the similarity of the closest embedding to the given sentence. 
         """
-        #val_arr = [((abs(1 - spatial.distance.cosine(sent, embed))))**2 for embed in self.sentence_embeddings]
-        #if max(val_arr) == 1.0:
-        #    return 1.0
-        #print(self.corpus_sentences[val_arr.index(max(val_arr))])
-        #val_arr.sort()
-        #print(sum(val_arr[-5:]) / float(5))
-        #print('-------------------')
-        #return sum(val_arr[-5:]) / float(5)
-        return max([((abs(1 - spatial.distance.cosine(sent, embed))))**2 for embed in self.sentence_embeddings])
+        return max([((abs(1 - spatial.distance.cosine(sent, embed))))**2
+                    for embed in self.sentence_embeddings])
 
     def compute_sentence_embeddings(self, sentences, a, probabilities):
         """
@@ -150,8 +143,6 @@ class SIF(Model):
             # NEED A DEFAULT for non-matching words
             vs = np.sum(word_calcs, axis=0) / len(word_calcs)
             new_embeddings.append(vs)
-        print("Percentage of words not in vocab: " + str(float(not_in_vocab)/ float(total_words)))
-        print("Percentage of words not in probabilites: " + str(float(def_prob)/ float(total_words)))
         pca = PCA()
         pca.fit(np.asarray(new_embeddings))
         u = pca.components_[0]

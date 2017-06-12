@@ -84,7 +84,7 @@ class MainController < ApplicationController
             article[:title] = artjson["title"]
             article[:text] = artjson["text"]
             article[:url] = url
-            article[:authors] = JSON.dump(artjson["authors"])
+            article[:authors] = artjson["authors"]
             article.save
         end
         if UserArticle.where(user: user, article: article).length == 0

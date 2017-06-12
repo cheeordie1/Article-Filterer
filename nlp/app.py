@@ -19,5 +19,5 @@ def highlight():
 
 
 if __name__ == '__main__':
-    model = SIF(1, 0.6, mode='para')
+    model = SIF(mode='para')
     app.run(debug=True, host='0.0.0.0', port=5001)

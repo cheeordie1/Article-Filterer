@@ -16,7 +16,7 @@ def get_article():
         retval = {}
         retval["text"] = a.text
         retval["title"] = a.title
-        retval["authors"] = a.authors
+        retval["authors"] = ', '.join(a.authors)
         return json.dumps(retval)
     except Exception as e:
         app.logger.error(traceback.format_exception(None, e, e.__traceback__))

@@ -46,7 +46,7 @@ class SIF(Model):
         self.word_embeddings = np.load('data/word2vec/word_embedding.npy')
         #with open('/home/ubuntu/flask/data/word2vec/vocab.pkl', 'rb') as f:
         with open('data/word2vec/vocab.pkl', 'rb') as f:
-            self.vocab = pkl.load(f)
+            self.vocab = pkl.load(f,encoding='latin1')
 
     def load_corpus(self, corpus):
         """

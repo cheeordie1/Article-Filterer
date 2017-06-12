@@ -24,6 +24,7 @@ class MainController < ApplicationController
 
     def action
         if params['read']
+            params['url'] = params['url'].strip
             article = addArticleForUser(params['url'], current_user)   
             if article == 'error'
                 redirect_to root_url(:result => 'error')  
@@ -33,6 +34,7 @@ class MainController < ApplicationController
         else
           result = "added"
           if params['formType'] == "text"
+            params['url'] = params['url'].strip
             addArticleForUser(params['url'], current_user)
           else
             file_data = params['file']
@@ -53,6 +55,12 @@ class MainController < ApplicationController
           redirect_to root_url(:result => result)
         end  
     end
+
+    def clear
+      UserArticle.where(user: current_user).destroy_all
+      redirect_to root_url
+    end
+
 
     private
 

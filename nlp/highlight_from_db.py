@@ -41,23 +41,32 @@ def highlight_tfidf(new_article, user_history, logger):
 
 def highlight_sif(model, new_article, user_history, logger):
     logger.info(user_history)
-    model.load_corpus(user_history)
-    paras, sims = model.highlight(new_article)
-    print(sims)
-    paragraphs = []
-    for i in range(len(paras)):
-        entry = {}
-        entry['text'] = paras[i]
-        if sims[i] < model.threshold:
-            entry['highlighted'] = True
-            logger.info("TRUE")
-            logger.info(sims[i])
-        else:
-            entry['highlighted'] = False
-            logger.info("FALSE")
-            logger.info(sims[i])
-        paragraphs.append(entry)
-    return paragraphs
+    if len(user_history) > 0:
+        model.load_corpus(user_history)
+        indices, sims = model.highlight(new_article)
+        for i in range(len(indices)-1, -1, -1):
+            index = indices[i]
+            if sims[i] < model.threshold:
+                new_article = new_article[:index[0]] + "<span class='highlighted'>" + new_article[index[0]:index[1]] + "</span" + new_article[index[1]:]
+    new_article = new_article.replace("\n", "<br />")
+    logger.info("printing returned article")
+    logger.info(new_article)
+    return {"article": new_article}
+    # print(sims)
+    # paragraphs = []
+    # for i in range(len(indices)):
+    #     entry = {}
+    #     entry['text'] = indices
+    #     if sims[i] < model.threshold:
+    #         entry['highlighted'] = True
+    #         logger.info("TRUE")
+    #         logger.info(sims[i])
+    #     else:
+    #         entry['highlighted'] = False
+    #         logger.info("FALSE")
+    #         logger.info(sims[i])
+    #     paragraphs.append(entry)
+    # return paragraphs
 
 def highlight_for_user(model, user_id, article_id, logger):
     conn = psycopg2.connect("host=postgres dbname=article-filter_test user=pguser password=dbpass")

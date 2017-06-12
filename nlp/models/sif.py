@@ -42,10 +42,10 @@ class SIF(Model):
         self.default_probability = 1e-2
 
         # TODO set up a server or database to fetch these from
-#        self.word_embeddings = np.load('/home/ubuntu/flask/data/word2vec/word_embedding.npy')
-        self.word_embeddings = np.load('data/word2vec/word_embedding.npy')
-        #with open('/home/ubuntu/flask/data/word2vec/vocab.pkl', 'rb') as f:
-        with open('data/word2vec/vocab.pkl', 'rb') as f:
+        self.word_embeddings = np.load('/home/ubuntu/flask/data/word2vec/word_embedding.npy')
+        # self.word_embeddings = np.load('data/word2vec/word_embedding.npy')
+        with open('/home/ubuntu/flask/data/word2vec/vocab.pkl', 'rb') as f:
+        # with open('data/word2vec/vocab.pkl', 'rb') as f:
             self.vocab = pkl.load(f,encoding='latin1')
 
     def load_corpus(self, corpus):

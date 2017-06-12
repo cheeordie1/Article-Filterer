@@ -27,7 +27,7 @@ def print_similarities(paras, sims, scores):
     #     print()
 
 def test_corpus(corpus, new_article,scores):
-    model = SIF(1, 1000, mode= 'sentence')#TFIDF_BOG()
+    model = SIF(1, 1000, mode= 'para')#TFIDF_BOG()
     model.load_corpus(corpus)
     paras, sims = [], []
     #for section in preprocess(new_article, mode='section'):
@@ -38,9 +38,9 @@ def test_corpus(corpus, new_article,scores):
     #    tempp, simpp = model.highlight(section)
     #    paras.append(tempp)
     #    sims.append(simpp)
-    paras, sims = model.highlight(new_article)
-    for i in range(len(paras)):
-        print(paras[i])
+    indices, sims = model.highlight(new_article)
+    for i in range(len(indices)):
+        print(new_article[indices[i][0]:indices[i][1]])
         print(sims[i])
 #    print_similarities(paras, sims, scores)
     

@@ -50,6 +50,8 @@ def highlight_sif(model, new_article, user_history, logger):
             if highlighted[i] == 1:
                 logger.info(i)
                 new_article = new_article[:index[0]] + "<span class='highlighted'>" + new_article[index[0]:index[1]] + "</span>" + new_article[index[1]:]
+    else:
+        new_article = "<span class='highlighted'>" + new_article + "</span>"
     new_article = new_article.replace("\n", "<br />")
     #logger.info("printing returned article")
     #logger.info(new_article)

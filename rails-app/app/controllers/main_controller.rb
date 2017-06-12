@@ -7,6 +7,11 @@ class MainController < ApplicationController
             @article = Article.find(params["article"])
             p 'Article Id = '
             p @article.id
+            if params['readbefore'] and params['readbefore'] == 'true'
+                @readbefore = true
+            else
+                @readbefore = false
+            end
         else
             @article = nil
         end
@@ -15,6 +20,7 @@ class MainController < ApplicationController
         else
             @result = ''
         end
+
         # if params["result"] == "added"
         #     @added = true
         # else
@@ -25,11 +31,11 @@ class MainController < ApplicationController
     def action
         if params['read']
             params['url'] = params['url'].strip
-            article = addArticleForUser(params['url'], current_user)   
+            article, readbefore = addArticleForUser(params['url'], current_user)   
             if article == 'error'
                 redirect_to root_url(:result => 'error')  
             else    
-                redirect_to root_url(:article => article.id)
+                redirect_to root_url(:article => article.id, :readbefore => readbefore)
             end
         else
           result = "added"
@@ -89,8 +95,10 @@ class MainController < ApplicationController
         end
         if UserArticle.where(user: user, article: article).length == 0
             UserArticle.create(user: user, article: article)
+        else
+            return article, true
         end
-        return article
+        return article, false
     end
 
 

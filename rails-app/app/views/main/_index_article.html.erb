@@ -5,8 +5,11 @@
   <div id="articleBackgroundRow" class="row">
     <div id="articleBackground" class="col-sm-offset-1 col-sm-10">
       <h1 id="articleTitle" class="articleTitle text-center"><%= raw @article.getTitle() %></h1>
-      <%= raw @article.getHighlighted(current_user) %>
-      
+      <% if @readbefore %>
+        <%= raw @article.text.gsub("\n", "<br />") %>
+      <% elsif %>
+        <%= raw @article.getHighlighted(current_user) %>
+      <% end %>
       <h6 id="articleAuthors" class="articleAuthors text-right">authored by <%= @article.authors %></h6>
     </div>
   </div>

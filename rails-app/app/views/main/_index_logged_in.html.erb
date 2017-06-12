@@ -58,9 +58,20 @@
           <!-- File Input -->
           <div class="row">
             <div id="indexFormURLContainer" class="form-group col-sm-12">
-              <label id="indexFileButton" class="btn btn-default btn-file">
-                Browse <input type="file" style="display: none;">
-              </label>
+              <div class="input-group">
+                <label id="indexFileButton" class="input-group-btn">
+                    <span class="btn btn-primary">
+                        Browse <input id="indexFileInput" style="display: none;" type="file" name="file">
+                    </span>
+                </label>
+                <input id="indexFileNameDisplay" class="form-control" readonly="" type="text">
+                <script type="text/javascript">
+                  $("#indexFileInput:file").change(function (){
+                    var fileName = $(this).val().split('\\').pop();
+                    $("#indexFileNameDisplay").val(fileName);
+                  });
+                </script>
+              </div>
             </div>
           </div>
           <!-- File URL buttons -->

@@ -27,21 +27,12 @@ def print_similarities(paras, sims, scores):
     #     print()
 
 def test_corpus(corpus, new_article,scores):
-    model = SIF(1, 1000, mode= 'para')#TFIDF_BOG()
+    model = SIF(threshold=0.6, mode= 'section')#TFIDF_BOG()
     model.load_corpus(corpus)
-    paras, sims = [], []
-    #for section in preprocess(new_article, mode='section'):
-    #    print("--------------------")
-    #    print(section)
-    #    if len(section) == 0:
-    #        continue
-    #    tempp, simpp = model.highlight(section)
-    #    paras.append(tempp)
-    #    sims.append(simpp)
-    indices, sims = model.highlight(new_article)
+    indices, highlighted = model.highlight(new_article)
     for i in range(len(indices)):
         print(new_article[indices[i][0]:indices[i][1]])
-        print(sims[i])
+        print(highlighted[i])
 #    print_similarities(paras, sims, scores)
     
 if __name__ == '__main__':

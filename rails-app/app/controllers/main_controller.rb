@@ -5,28 +5,36 @@ class MainController < ApplicationController
     def index
         if params["article"]
             @article = Article.find(params["article"])
+            p 'Article Id = '
+            p @article.id
         else
             @article = nil
         end
-        if params["result"] == "added"
-            @added = true
+        if params["result"]
+            @result = params["result"]
         else
-            @added = false
+            @result = ''
         end
-    end
-
-    def clear
-      UserArticle.where(user: current_user).destroy_all
-      redirect_to_root_path
+        # if params["result"] == "added"
+        #     @added = true
+        # else
+        #     @added = false
+        # end
     end
 
     def action
         if params['read']
+            params['url'] = params['url'].strip
             article = addArticleForUser(params['url'], current_user)   
-            redirect_to root_url(:article => article.id)
+            if article == 'error'
+                redirect_to root_url(:result => 'error')  
+            else    
+                redirect_to root_url(:article => article.id)
+            end
         else
           result = "added"
           if params['formType'] == "text"
+            params['url'] = params['url'].strip
             addArticleForUser(params['url'], current_user)
           else
             file_data = params['file']
@@ -48,6 +56,12 @@ class MainController < ApplicationController
         end  
     end
 
+    def clear
+      UserArticle.where(user: current_user).destroy_all
+      redirect_to root_url
+    end
+
+
     private
 
     def addArticleForUser(url, user)
@@ -58,18 +72,19 @@ class MainController < ApplicationController
             request = Net::HTTP::Post.new('/get_article', {'Content-Type' => 'application/json'})
             request.body = data.to_json
             response = http.request(request)
-            if response == nil
-
-              return nil
-            end
+            p 'response from parser'
+            p response
             # cmd = "python3 app/scripts/get_article.py %s" % Shellwords.escape(url)
             # out, err, st = Open3.capture3(cmd)
             artjson = JSON.parse(response.body())
             article = Article.new()
+            if artjson['text'] == nil
+                return 'error'
+            end
             article[:title] = artjson["title"]
             article[:text] = artjson["text"]
             article[:url] = url
-            article[:authors] = JSON.dump(artjson["authors"])
+            article[:authors] = artjson["authors"]
             article.save
         end
         if UserArticle.where(user: user, article: article).length == 0

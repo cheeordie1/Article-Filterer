@@ -1,7 +1,19 @@
 import nltk
+import sys
+import re
 
 MIN_SECTION_LENGTH = 50
 
+def compute_indices(chunks, mode):
+    indices = [(0, len(chunks[0])+2)]
+    for c in chunks[1:]:
+        last_end = indices[-1][1]
+        if mode == 'sentence':
+            indices.append((last_end, last_end + len(c) + 1))
+        else:
+            indices.append((last_end, last_end + len(c) + 2))
+    return indices
+    
 # takes a string of text
 def tokenize(string):
     return [w.lower() for w in nltk.tokenize.word_tokenize(string)  \
@@ -17,41 +29,46 @@ def tokenize(string):
        'section'
 """
 def preprocess(article, mode='section', min_section_length=100):
-
     if mode == 'sentence':
-        sens = article.split('\n')
+        sens = article.split('.')
+        indices = compute_indices(sens, mode)
         sens = [tokenize(s) for s in sens]
-        return sens
+        return sens, indices
 
     elif mode == 'para':
         paras = article.split('\n\n')
-        paras = [tokenize(p) for p in paras]
-        return paras
+        indices = compute_indices(paras, mode)
+        paras = [tokenize(s) for s in paras]
+        return paras, indices
 
     elif mode == 'section':
         paras = article.split('\n\n')
-        paras = [tokenize(p) for p in paras]
+        indices = compute_indices(paras, mode)
+        paras = [tokenize(s) for s in paras]
         cur_len = 0
         cur_paras = []
+        cur_ind = 0
+        inds = []
         sections = []
-        for para in paras:
+        for i, para in enumerate(paras):
             cur_len += len(para)
-            print(cur_len)
             cur_paras += para
             if cur_len >= min_section_length:
                 cur_len = 0
                 sections.append(cur_paras)
+                inds.append((indices[cur_ind][0], indices[i][1]))
+                cur_ind = i+1
                 cur_paras = []
             else:
                 # preserve paragraph in output
                 cur_paras += ['\n\n']
-        sections.append(cur_paras[:-1])
-        return sections
-
+        return sections, inds
+    else:
+        raise Exception('Please pass in a valid mode: \nsentence \npara \nsection')
 
 # test
 if __name__ == '__main__':
-    pp = preprocess('The success of neural network methods for computing word embeddings has motivated \
+    test_str = 'The success of neural network methods for computing word embeddings has motivated \
             methods for generating semantic embeddings of longer pieces of text, such \
             as sentences and paragraphs. Surprisingly, Wieting et al (ICLR’16) showed that \
             such complicated methods are outperformed, especially in out-of-domain (transfer \
@@ -72,7 +89,8 @@ if __name__ == '__main__':
             method using a latent variable generative model for sentences, which is \
             a simple extension of the model in Arora et al. (TACL’16) with new “smoothing” \
             terms that allow for words occurring out of context, as well as high probabilities \
-            for words like and, not in all contexts.', mode='section')
+            for words like and, not in all contexts.'
+    pp = preprocess(test_str, mode='section', min_section_length=100)
 
     print(len(pp))
     print(pp)

@@ -36,12 +36,13 @@ while(True):
 		elif cmd=="read":
 			print("reading article {}".format(article['title']))
 			paras, sims = model.highlight(article['text'])
-			for i in range(min(len(paras), len(sims))):
+			for i in range(len(paras)):
 				start, end = paras[i]
 				text = article['text'][start:end-1]
-				if sims[i]<0.6:
+				if sims[i]:
 					text = text.upper()
 				print(text)
+				print("PARAGRAPH")
 			# toHighlight = []
 	except:
 		print("Unexpected error:", traceback.print_exc())

@@ -7,7 +7,7 @@ import newspaper
 import traceback
 
 
-model = SIF(1, 1000, mode= 'sentence')
+model = SIF(mode= 'para')
 paras, sims = [], []
 
 def scrape(url):

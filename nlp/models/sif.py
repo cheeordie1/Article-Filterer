@@ -58,7 +58,7 @@ class SIF(Model):
         # Compute and update sentence embeddings
         self.word_counts = defaultdict(int)
         self.total_count = 0
-        self.corpus_sentences = self.process_articles(corpus, True)
+        self.corpus_sentences, _ = self.process_articles(corpus, True)
         self.update_unigram_probs()
         self.sentence_embeddings = self.compute_sentence_embeddings(
                                     self.corpus_sentences,
@@ -75,7 +75,8 @@ class SIF(Model):
             raise ValueError('No Corpus initialized...')
         
         # Parse article
-        sentences = self.process_articles([article], False)
+        sentences, indices = self.process_articles([article], False)
+        indices = indices[0]
 
         # make sentence embeddings and compute similarities
         sent_embeds = self.compute_sentence_embeddings(
@@ -88,7 +89,7 @@ class SIF(Model):
             dist = self.compute_similarity(sent_embeds[i])
             paras.append(" ".join(sentences[i]))
             sims.append(dist)
-        return paras, sims
+        return indices, sims
 
     def highlight_corpus(self, corpus):
         """
@@ -186,14 +187,16 @@ class SIF(Model):
         variables if load is set to true.
         """
         chunks = []
+        indices = []
         for article in corpus:
-            parsed = preprocess(article, self.mode, self.chunk_size)
+            parsed, ind = preprocess(article, self.mode, self.chunk_size)
             for item in parsed:
                 if len(item) == 0:
                     continue
                 chunks.append(item)
+                indices.append(ind)
                 if load:
                     self.total_count += len(item)
                     for word in item:
                         self.word_counts[word] += 1
-        return chunks
+        return chunks, indices

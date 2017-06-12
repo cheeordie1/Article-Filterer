@@ -62,8 +62,6 @@ def preprocess(article, mode='section', min_section_length=100):
             else:
                 # preserve paragraph in output
                 cur_paras += ['\n\n']
-        sections.append(cur_paras[:-1])
-        inds.append((indices[cur_ind][0], indices[i][1]))
         return sections, inds
     else:
         raise Exception('Please pass in a valid mode: \nsentence \npara \nsection')
@@ -92,7 +90,7 @@ if __name__ == '__main__':
             a simple extension of the model in Arora et al. (TACL’16) with new “smoothing” \
             terms that allow for words occurring out of context, as well as high probabilities \
             for words like and, not in all contexts.'
-    pp = preprocess(test_str, mode='section', min_section_length=50)
+    pp = preprocess(test_str, mode='section', min_section_length=100)
 
     print(len(pp))
     print(pp)

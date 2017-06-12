@@ -17,7 +17,7 @@ class SIF(Model):
     to be called in practice for initializing, loading corpuses, and
     highlighting sections of text.
     """
-    def __init__(self, a, threshold, mode = 'section', chunk_size = 100):
+    def __init__(self, threshold = 0.6, mode = 'section', chunk_size = 100):
         """
         Initializes hyper parameters and loads in word embeddings.
         The parameters passed in are as follows:
@@ -31,7 +31,7 @@ class SIF(Model):
                            paragraphs.  Default is section
             - chunk_size:  Chunk size for chunk mode.  Default is 100.
         """
-        self.a = a
+        self.a = 1
         self.threshold = threshold
         self.chunk_size = chunk_size
         self.total_count = 0
@@ -67,8 +67,10 @@ class SIF(Model):
     
     def highlight(self, article):
         """
-        Given an article, returns a list of chunks or sentences
-        and a list of their corrosponding similiarites.
+        Given an article, returns a list of indexes of chunks or sentences
+        and a binary array indicating whethter each chunk should be highlighted.
+        1 => highlight
+        0 => no highlight
         """
         # Some Error Checking and Formatting
         if self.sentence_embeddings is None:
@@ -89,7 +91,11 @@ class SIF(Model):
             dist = self.compute_similarity(sent_embeds[i])
             paras.append(" ".join(sentences[i]))
             sims.append(dist)
-        return indices, sims
+
+        highlighted = np.zeros_like(sims, dtype=int)
+        # threshold
+        highlighted[np.where(np.array(sims) < self.threshold)] = 1
+        return indices, highlighted
 
     def highlight_corpus(self, corpus):
         """
